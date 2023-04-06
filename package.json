@@ -1,5 +1,6 @@
 {
   "name": "pokewordle",
+  "homepage":"https://chey3002.github.io/pokeWordle/",
   "private": true,
   "version": "0.0.0",
   "type": "module",
