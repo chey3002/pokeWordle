@@ -5,7 +5,7 @@ export default function RowCompleted({ word, solution }) {
     const checkLetter = (letter,i) => {
         console.log(i);
         if (!solution?.toUpperCase().includes(letter)) return 'absent'
-        if (solution?.toUpperCase().indexOf(letter) === i) return 'correct'
+        if (solution?.toUpperCase().charAt(i) === letter) return 'correct'
         return 'present'
     }
     
