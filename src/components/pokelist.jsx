@@ -7,9 +7,9 @@ export default function Pokelist({ pokesSameLength }) {
         return 'hidden'
     }
   return (
-    <div className='flex flex-col justify-center'>
+    <div className='flex flex-col justify-center my-3'>
                     <div>
-                        <button className='flex m-auto w-fit px-3 py-2 justify-center border-b  rounded-md  active:translate-y-1  transition-all' onClick={() => setShowPokelist(!showPokelist)}>{showPokelist ? 'Hide' : 'Show'} Pokemon List</button>
+                        <button className='flex m-auto w-fit px-3 py-2 justify-center border-b border-blue-50  rounded-md  active:translate-y-1  transition-all animate-slow-bounce' onClick={() => setShowPokelist(!showPokelist)}>{showPokelist ? 'Hide' : 'Show'} Pokemon List</button>
                     </div>
                     <div className={`mt-5 ${pokelistVisivility()} transition-all`}>
                         <ul className='text-start grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-2 '>

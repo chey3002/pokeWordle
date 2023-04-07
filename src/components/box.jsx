@@ -13,10 +13,10 @@ export default function Box({ value, status }) {
             return 'bg-gray-500 border-2 border-gray-400'
         }
         if (status === 'empty') {
-            return 'bg-black border-2 border-gray-400'
+            return 'bg-black border-2 border-gray-400 animate'
         }
         if (status === 'edit') {
-            return 'bg-black border-2 border-gray-400'
+            return 'bg-black border-2 border-gray-400 '
         }
     }
     const boxClass=`uppercase w-16 h-16 flex text-4xl justify-center items-center ${boxStyle(status)}`

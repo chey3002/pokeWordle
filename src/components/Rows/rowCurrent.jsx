@@ -1,9 +1,9 @@
 import React from 'react'
 import Box from '../box'
 
-export default function RowCurrent({word,solution}) {
+export default function RowCurrent({word,solution,shake}) {
   return (
-      <div className='flex flex-row justify-center '>
+    <div className={`flex flex-row justify-center animate-pulse transform ${shake ? "animate-shake" : ""}`}>
         {word.split('').map((letter, index) => {
                 return <Box value={letter} key={index} status="edit" />
         })}

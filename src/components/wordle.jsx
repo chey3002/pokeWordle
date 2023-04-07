@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
 import { pokeList } from '../../public/json/pokemons'
-import Box from './box';
 import RowCompleted from './Rows/rowCompleted';
 import RowEmpty from './Rows/rowEmpty';
 import RowCurrent from './Rows/rowCurrent';
@@ -15,6 +14,7 @@ export default function Wordle() {
     const [currentWord, setCurrentWord] = useState("")
     const [completedWords, setCompletedWords] = useState([])
     const [gameStatus, setGameStatus] = useState("playing")
+    const [animate, setAnimate] = useState(false);
 
     /////////////////////////////
     /////////////////////////////
@@ -38,7 +38,7 @@ export default function Wordle() {
             return
         }
         if (pokesSameLength.current.filter(poke => poke.name.toUpperCase() === currentWord.toUpperCase()).length === 0) {
-            console.log("palabra invalida");
+            setAnimate(true)
             return
         }
         setCompletedWords([...completedWords, currentWord])
@@ -101,11 +101,22 @@ export default function Wordle() {
     useEffect(() => {
         handleReset()
     }, [])
+    
+
+    useEffect(() => {
+        let timer;
+        if (animate) {
+            timer = setTimeout(() => {
+                setAnimate(false);
+            }, 500);
+        }
+        return () => clearTimeout(timer);
+    }, [animate]);
 
 
     return (
         <div className='min-h-screen grid place-items-center bg-slate-700 text-white'>
-            <h1 className='text-center font-pokeFont text-5xl md:text-7lx lg:text-9xl text-amber-400 textStrokeBlue'>
+            <h1 className=' text-center font-pokeFont text-5xl md:text-7lx lg:text-9xl text-amber-400 text-shadow-textBlorderBlue'>
                 PokeWordle
             </h1>
             <div>
@@ -113,7 +124,7 @@ export default function Wordle() {
                 {completedWords?.map((word, index) => {
                     return <RowCompleted key={index} word={word} solution={chosenPokemon.name} />
                 })}
-                {(gameStatus!="won"&&gameStatus!="lost") && <RowCurrent word={currentWord} solution={chosenPokemon.name} />}
+                {(gameStatus != "won" && gameStatus != "lost") && <RowCurrent word={currentWord} solution={chosenPokemon.name} shake={ animate} />}
                 {Array.from(Array(6 - turn)).map((_, index) => { 
                     return<RowEmpty key={index} solution={chosenPokemon.name} />
                 })}
@@ -129,7 +140,7 @@ export default function Wordle() {
                 <p>The max length of the word will be 6</p>
                 <p>The list of pokemon used for this app was fetched from the pokeApi at 03/04/2023, so the pokemon names are in English</p>
                 <Pokelist pokesSameLength={pokesSameLength} />
-                <div className='flex justify-center my-5'><p>Created by: <a href='https://github.com/chey3002' className='text-blue-500'>Chey3002</a>, check a look of the code on <a href='https://github.com/chey3002/pokeWordle' className='text-blue-500'>Github</a></p>
+                <div className='flex justify-center '><p>Created by: <a href='https://github.com/chey3002' className='text-blue-500'>Chey3002</a>, check a look of the code on <a href='https://github.com/chey3002/pokeWordle' className='text-blue-500'>Github</a></p>
                 </div>
               </div>
         </div>
