@@ -120,7 +120,7 @@ export default function Wordle() {
 
     return (
         <div className='min-h-screen grid place-items-center bg-slate-700 text-white'>
-            <h1 className=' text-center font-pokeFont text-5xl md:text-7lx lg:text-9xl text-amber-400 text-shadow-textBlorderBlue'>
+            <h1 className=' text-center font-pokeFont text-7xl mt-2 md:text-9xl text-amber-400 text-shadow-textBlorderBlue'>
                 PokeWordle
             </h1>
             <div>
