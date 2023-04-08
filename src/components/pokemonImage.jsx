@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
 
 export default function PokemonImage ({ pokemonNumber }) {
-    const [imageUrl, setImageUrl] = useState(null);
+    const [imageUrl, setImageUrl] = useState(`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonNumber}.png`);
 
+    // useEffect(() => {
+    //     fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonNumber}`)
+    //         .then(response => response.json())
+    //         .then(data => setImageUrl(data.sprites.front_default));
+    // }, [pokemonNumber]);
     useEffect(() => {
-        fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonNumber}`)
-            .then(response => response.json())
-            .then(data => setImageUrl(data.sprites.front_default));
+        setImageUrl(`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonNumber}.png`)
     }, [pokemonNumber]);
-
-    if (!imageUrl) {
+    if (!pokemonNumber) {
         return <div></div>;
     }
 

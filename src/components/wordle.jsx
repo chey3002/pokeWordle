@@ -132,11 +132,10 @@ export default function Wordle() {
                 {Array.from(Array(6 - turn)).map((_, index) => { 
                     return<RowEmpty key={index} solution={chosenPokemon.name} />
                 })}
-                {gameStatus === "won" ?
-                    <div className='grid place-content-center grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-2'>
+                {chosenPokemon.id && <div className={`${gameStatus != "won" && 'hidden'} grid place-content-center grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-2`} >
                     <p className=' m-auto align-middle text-center text-2xl text-green-400'>Congratulations!</p>
                     <PokemonImage pokemonNumber={chosenPokemon.id} />
-                </div> :<></>}
+                </div>}
                 {gameStatus === "lost" ? <p className='text-center text-2xl text-red-500'>You lost! the correct pokemon was:"{chosenPokemon.name.toUpperCase()}"</p> : <></>}
                 <div className='my-5'>
                     <button className="flex m-auto w-fit px-3 py-2 justify-center border-2 border-blue-600 bg-blue-500 rounded-md p-2 hover:bg-blue-600 active:translate-y-1 active:border-blue-500 transition-all"  onClick={handleReset}>Reset</button>
