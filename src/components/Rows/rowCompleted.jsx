@@ -1,12 +1,8 @@
 import React from 'react'
 import Box from '../box'
 
-export default function RowCompleted({ word, solution }) {
-    const checkLetter = (letter,i) => {
-        if (!solution?.toUpperCase().includes(letter)) return 'absent'
-        if (solution?.toUpperCase().charAt(i) === letter) return 'correct'
-        return 'present'
-    }
+export default function RowCompleted({ word, checkLetter }) {
+
     
   return (
       <div className='flex flex-row justify-center '>

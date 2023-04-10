@@ -4,10 +4,12 @@ import RowCompleted from './Rows/rowCompleted';
 import RowEmpty from './Rows/rowEmpty';
 import RowCurrent from './Rows/rowCurrent';
 import { useWindow } from '../hooks/useWindow';
-import Pokelist from './pokelist';
 import PokemonImage from './pokemonImage';
+import Footer from './footer';
+import Header from './header';
+import Keyboard from './keyboard';
 
-const keys=['Q','W','E','R','T','Y','U','I','O','P','A','S','D','F','G','H','J','K','L','-','Z','X','C','V','B','N','M']
+const keys = ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', '-', 'Z', 'X', 'C', 'V', 'B', 'N', 'M']
 export default function Wordle() {
     const [chosenPokemon, setChosenPokemon] = useState({})
     const pokesSameLength = useRef([])
@@ -16,6 +18,9 @@ export default function Wordle() {
     const [completedWords, setCompletedWords] = useState([])
     const [gameStatus, setGameStatus] = useState("playing")
     const [animate, setAnimate] = useState(false);
+    const letterState = useRef({})
+
+
 
     /////////////////////////////
     /////////////////////////////
@@ -33,7 +38,6 @@ export default function Wordle() {
             return
         }
         if (turn === 6) {
-            console.log("perdistes");
             setCompletedWords([...completedWords, currentWord])
             setGameStatus("lost")
             return
@@ -47,25 +51,25 @@ export default function Wordle() {
         setTurn(turn + 1)
     }
     const handleKeydown = (e) => {
-        if(gameStatus!="playing"){
+        if (gameStatus != "playing") {
             return
         }
         const letter = e.key.toUpperCase()
-        if (e.key === 'Backspace' && currentWord.length > 0) {
+        if ((e.key === 'Backspace' || e.key ==='←')&& currentWord.length > 0) {
             onDelete()
         }
-        if (e.key === 'Enter' && currentWord.length === chosenPokemon.length) {
+        if (e.key === 'Enter' ) {
             onComplete()
         }
         if (currentWord.length >= chosenPokemon.length) {
             return
         }
-        if (keys.includes(letter)) { 
+        if (keys.includes(letter)) {
             onInput(letter)
         }
     }
     useWindow('keydown', handleKeydown)
-    
+
     /////////////////////////////
     /////////////////////////////
     //initialization of the game
@@ -87,11 +91,11 @@ export default function Wordle() {
         try {
             const selected = getRandomPokemon()
             let id = selected.url.split("/")
-            id=id[id.length-2]
+            id = id[id.length - 2]
             setChosenPokemon({
                 name: selected.name,
                 length: selected.name.length,
-                id:id
+                id: id
             });
             pokesSameLength.current = pokeList.filter(poke => poke.name.length === selected.name.length)
         } catch (error) {
@@ -105,7 +109,7 @@ export default function Wordle() {
     useEffect(() => {
         handleReset()
     }, [])
-    
+
 
     useEffect(() => {
         let timer;
@@ -117,39 +121,46 @@ export default function Wordle() {
         return () => clearTimeout(timer);
     }, [animate]);
 
+    const checkLetter = (letter, i) => {
+        const solution = chosenPokemon.name
+        if (!solution?.toUpperCase().includes(letter)) {
+            letterState.current[letter] = 'absent'
+            return 'absent'
+        }
+        if (solution?.toUpperCase().charAt(i) === letter) {
+            letterState.current[letter] = 'correct'
+            return 'correct'
+        }
+        letterState.current[letter] = 'present'
 
+        return 'present'
+    }
     return (
         <div className='min-h-screen grid place-items-center bg-slate-700 text-white'>
-            <h1 className=' text-center font-pokeFont text-7xl mt-2 md:text-9xl text-amber-400 text-shadow-textBlorderBlue'>
-                PokeWordle
-            </h1>
+            <Header />
             <div>
-                
                 {completedWords?.map((word, index) => {
-                    return <RowCompleted key={index} word={word} solution={chosenPokemon.name} />
+                    return <RowCompleted key={index} checkLetter={checkLetter} word={word} solution={chosenPokemon.name} />
                 })}
-                {(gameStatus != "won" && gameStatus != "lost") && <RowCurrent word={currentWord} solution={chosenPokemon.name} shake={ animate} />}
-                {Array.from(Array(6 - turn)).map((_, index) => { 
-                    return<RowEmpty key={index} solution={chosenPokemon.name} />
+                {(gameStatus != "won" && gameStatus != "lost") && <RowCurrent word={currentWord} solution={chosenPokemon.name} shake={animate} />}
+                {Array.from(Array(6 - turn)).map((_, index) => {
+                    return <RowEmpty key={index} solution={chosenPokemon.name} />
                 })}
                 {chosenPokemon.id && <div className={`${gameStatus != "won" && 'hidden'} grid place-content-center grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-2`} >
                     <p className=' m-auto align-middle text-center text-2xl text-green-400'>Congratulations!</p>
                     <PokemonImage pokemonNumber={chosenPokemon.id} />
                 </div>}
                 {gameStatus === "lost" ? <p className='text-center text-2xl text-red-500'>You lost! the correct pokemon was:"{chosenPokemon.name.toUpperCase()}"</p> : <></>}
+
                 <div className='my-5'>
-                    <button className="flex m-auto w-fit px-3 py-2 justify-center border-2 border-blue-600 bg-blue-500 rounded-md p-2 hover:bg-blue-600 active:translate-y-1 active:border-blue-500 transition-all"  onClick={handleReset}>Reset</button>
+                    <button className="flex m-auto w-fit px-3 py-2 justify-center border-2 border-blue-600 bg-blue-500 rounded-md p-2 hover:bg-blue-600 active:translate-y-1 active:border-blue-500 transition-all" onClick={handleReset}>Reset</button>
                 </div>
+                <Keyboard
+                    letterState={letterState}
+                    handleKeydown={handleKeydown}
+                />
             </div>
-            
-            <div className='text-center'>
-                <p>The list of pokemon available  are {pokesSameLength.current.length} with the same length ({chosenPokemon.length})</p>
-                <p>The max length of the word will be 6</p>
-                <p>The list of pokemon used for this app was fetched from the pokeApi at 03/04/2023, so the pokemon names are in English</p>
-                <Pokelist pokesSameLength={pokesSameLength} />
-                <div className='flex justify-center '><p>Created by: <a href='https://github.com/chey3002' className='text-blue-500'>Chey3002</a>, check a look of the code on <a href='https://github.com/chey3002/pokeWordle' className='text-blue-500'>Github</a></p>
-                </div>
-              </div>
+            <Footer pokesSameLength={pokesSameLength} chosenPokemon={chosenPokemon} />
         </div>
     )
 }
