@@ -105,6 +105,7 @@ export default function Wordle() {
         setCurrentWord("")
         setCompletedWords([])
         setGameStatus("playing")
+        letterState.current = {}
     }
     useEffect(() => {
         handleReset()
