@@ -4,10 +4,11 @@ import RowCompleted from './Rows/rowCompleted';
 import RowEmpty from './Rows/rowEmpty';
 import RowCurrent from './Rows/rowCurrent';
 import { useWindow } from '../hooks/useWindow';
-import PokemonImage from './pokemonImage';
 import Footer from './footer';
 import Header from './header';
 import Keyboard from './keyboard';
+import ModalInstructions from './modalInstructions';
+import ModalPoke from './modalPoke';
 
 const keys = ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', '-', 'Z', 'X', 'C', 'V', 'B', 'N', 'M']
 export default function Wordle() {
@@ -19,7 +20,6 @@ export default function Wordle() {
     const [gameStatus, setGameStatus] = useState("playing")
     const [animate, setAnimate] = useState(false);
     const letterState = useRef({})
-
 
 
     /////////////////////////////
@@ -149,9 +149,7 @@ export default function Wordle() {
                 })}
                 {chosenPokemon.id && <div className={`${gameStatus != "won" && 'hidden'} grid place-content-center grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-2`} >
                     <p className=' m-auto align-middle text-center text-2xl text-green-400'>Congratulations!</p>
-                    <PokemonImage pokemonNumber={chosenPokemon.id} />
                 </div>}
-                {gameStatus === "lost" ? <p className='text-center text-2xl text-red-500'>You lost! the correct pokemon was:"{chosenPokemon.name.toUpperCase()}"</p> : <></>}
 
                 <div className='my-5'>
                     <button className="flex m-auto w-fit px-3 py-2 justify-center border-2 border-blue-600 bg-blue-500 rounded-md p-2 hover:bg-blue-600 active:translate-y-1 active:border-blue-500 transition-all" onClick={handleReset}>Reset</button>
@@ -161,6 +159,9 @@ export default function Wordle() {
                     handleKeydown={handleKeydown}
                 />
             </div>
+            <ModalInstructions title={"How to play"} />
+            <ModalPoke title={"You win!"} chosenPokemon={chosenPokemon} gameStatus={gameStatus} active={'won'} />
+            <ModalPoke title={"You lose!"} chosenPokemon={chosenPokemon} gameStatus={gameStatus} active={'lost'}  />
             <Footer pokesSameLength={pokesSameLength} chosenPokemon={chosenPokemon} />
         </div>
     )
