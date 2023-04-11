@@ -53,7 +53,8 @@ export default function ModalInstructions({ title }) {
                       <Box value={'O'} status={'absent'} />
                     </div>
                     <p className='my-2'>D is in the word but in the wrong spot.</p>
-                    <p>The letters on gray are not in the word</p>
+                    <p className='my-2'>The letters on gray are not in the word</p>
+                    <p className='my-2'><b>Remember</b>, you can click on the Show Pokemon List button at the bottom of the screen to see the possible pokemon names</p>
                   </div>
                 </div>
                 {/*footer*/}
