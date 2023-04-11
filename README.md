@@ -4,6 +4,7 @@ PokeWordle is a game based on the popular word-guessing game Wordle, but with a 
 
 This project is built with React and Tailwind, and is inspired by the [Vida MRR](https://www.youtube.com/watch?v=oe27wXQ9yR4), and [Harry Wolff](https://www.youtube.com/watch?v=t_omcJmOQ_k) videos. I'm also using the [PokeAPI](https://pokeapi.co/) to retrieve information about the Pokémon.
 
+[Play here!](https://chey3002.github.io/pokeWordle/)
 ## How to Play
 
 The goal of the game is to guess the name of a random Pokémon in just six tries. For each guess, enter the name of the Pokémon you think it is, and the game will show you how many letters match the correct name, and how many of those letters are in the correct position.
