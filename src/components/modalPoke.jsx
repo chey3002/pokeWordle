@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-closing-tag-location */
 import React, { useEffect } from 'react'
 import PokemonImage from './pokemonImage'
 
@@ -57,7 +58,7 @@ export default function ModalPoke ({ title, active, chosenPokemon, gameStatus })
             </div>
           </div>
           <div className='opacity-25 fixed inset-0 z-40 bg-black' />
-        </>)
+          </>)
         : null}
     </>
   )

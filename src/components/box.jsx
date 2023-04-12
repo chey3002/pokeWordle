@@ -1,4 +1,3 @@
-import React from 'react'
 
 export default function Box ({ value, status }) {
   function boxStyle (status) { // posible status: correct, present, absent, empty, edit

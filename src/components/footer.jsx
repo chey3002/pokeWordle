@@ -1,4 +1,4 @@
-import React from 'react'
+
 import Pokelist from './pokelist'
 
 export default function Footer ({ pokesSameLength, chosenPokemon }) {

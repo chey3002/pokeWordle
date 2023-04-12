@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+
+import { useState, useEffect } from 'react'
 
 export default function PokemonImage ({ pokemonNumber }) {
   const [imageUrl, setImageUrl] = useState(`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonNumber}.png`)
