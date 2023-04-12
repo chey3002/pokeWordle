@@ -1,9 +1,9 @@
 import './App.css'
 import Wordle from './components/wordle'
-function App() {
+function App () {
   return (
-  <Wordle/>
-)
+    <Wordle />
+  )
 }
 
 export default App
